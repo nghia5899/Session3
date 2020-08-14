@@ -88,7 +88,7 @@ namespace DALs
             {
                 RoutesDTO routesDTO = new RoutesDTO(dr["DepartureAirportID"].ToString(),
                     dr["ArrivalAirportID"].ToString(),
-                    ngaydi,
+                    String.Format("{0: yy/MM/dd}",ngaydi),
                    dr["Time"].ToString(),
                    "[" + dr["FlightNumber"].ToString() + "]",
                    (Convert.ToDouble(dr["EconomyPrice"]) * hangve).ToString(),

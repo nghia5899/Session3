@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnapply = new System.Windows.Forms.Button();
-            this.txtreturn = new System.Windows.Forms.TextBox();
-            this.txtoutbound = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.rboneway = new System.Windows.Forms.RadioButton();
@@ -46,7 +44,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.cbthreeday1 = new System.Windows.Forms.CheckBox();
             this.gridviewreturn = new System.Windows.Forms.DataGridView();
-            this.label7 = new System.Windows.Forms.Label();
+            this.txtreturnflight = new System.Windows.Forms.Label();
             this.cbthreeday2 = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -54,6 +52,8 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.gridviewoutbound = new System.Windows.Forms.DataGridView();
+            this.txtoutbound = new System.Windows.Forms.DateTimePicker();
+            this.txtreturn = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewreturn)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -63,9 +63,9 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
-            this.groupBox1.Controls.Add(this.btnapply);
             this.groupBox1.Controls.Add(this.txtreturn);
             this.groupBox1.Controls.Add(this.txtoutbound);
+            this.groupBox1.Controls.Add(this.btnapply);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.rboneway);
@@ -98,20 +98,6 @@
             this.btnapply.UseVisualStyleBackColor = true;
             this.btnapply.Click += new System.EventHandler(this.button1_Click);
             // 
-            // txtreturn
-            // 
-            this.txtreturn.Location = new System.Drawing.Point(594, 110);
-            this.txtreturn.Name = "txtreturn";
-            this.txtreturn.Size = new System.Drawing.Size(140, 22);
-            this.txtreturn.TabIndex = 14;
-            // 
-            // txtoutbound
-            // 
-            this.txtoutbound.Location = new System.Drawing.Point(344, 109);
-            this.txtoutbound.Name = "txtoutbound";
-            this.txtoutbound.Size = new System.Drawing.Size(133, 22);
-            this.txtoutbound.TabIndex = 13;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -137,6 +123,7 @@
             // rboneway
             // 
             this.rboneway.AutoSize = true;
+            this.rboneway.Checked = true;
             this.rboneway.Location = new System.Drawing.Point(120, 111);
             this.rboneway.Name = "rboneway";
             this.rboneway.Size = new System.Drawing.Size(84, 21);
@@ -156,6 +143,7 @@
             this.rbreturn.TabStop = true;
             this.rbreturn.Text = "Return";
             this.rbreturn.UseVisualStyleBackColor = true;
+            this.rbreturn.CheckedChanged += new System.EventHandler(this.rbreturn_CheckedChanged);
             // 
             // cbcabintype
             // 
@@ -165,6 +153,7 @@
             this.cbcabintype.Name = "cbcabintype";
             this.cbcabintype.Size = new System.Drawing.Size(154, 24);
             this.cbcabintype.TabIndex = 6;
+            this.cbcabintype.SelectedIndexChanged += new System.EventHandler(this.cbcabintype_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -229,10 +218,12 @@
             this.cbthreeday1.TabIndex = 21;
             this.cbthreeday1.Text = "Display three days before and after";
             this.cbthreeday1.UseVisualStyleBackColor = true;
+            this.cbthreeday1.CheckedChanged += new System.EventHandler(this.cbthreeday1_CheckedChanged);
             // 
             // gridviewreturn
             // 
             this.gridviewreturn.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridviewreturn.Enabled = false;
             this.gridviewreturn.Location = new System.Drawing.Point(69, 526);
             this.gridviewreturn.Name = "gridviewreturn";
             this.gridviewreturn.RowHeadersWidth = 51;
@@ -240,25 +231,28 @@
             this.gridviewreturn.Size = new System.Drawing.Size(909, 177);
             this.gridviewreturn.TabIndex = 23;
             // 
-            // label7
+            // txtreturnflight
             // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(66, 491);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(138, 17);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Return flight details :";
+            this.txtreturnflight.AutoSize = true;
+            this.txtreturnflight.Enabled = false;
+            this.txtreturnflight.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.txtreturnflight.Location = new System.Drawing.Point(66, 491);
+            this.txtreturnflight.Name = "txtreturnflight";
+            this.txtreturnflight.Size = new System.Drawing.Size(138, 17);
+            this.txtreturnflight.TabIndex = 22;
+            this.txtreturnflight.Text = "Return flight details :";
             // 
             // cbthreeday2
             // 
             this.cbthreeday2.AutoSize = true;
+            this.cbthreeday2.Enabled = false;
             this.cbthreeday2.Location = new System.Drawing.Point(725, 490);
             this.cbthreeday2.Name = "cbthreeday2";
             this.cbthreeday2.Size = new System.Drawing.Size(253, 21);
             this.cbthreeday2.TabIndex = 24;
             this.cbthreeday2.Text = "Display three days before and after";
             this.cbthreeday2.UseVisualStyleBackColor = true;
+            this.cbthreeday2.CheckedChanged += new System.EventHandler(this.cbthreeday2_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -284,6 +278,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "  Book flight";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label8
             // 
@@ -323,6 +318,26 @@
             this.gridviewoutbound.Size = new System.Drawing.Size(903, 181);
             this.gridviewoutbound.TabIndex = 27;
             // 
+            // txtoutbound
+            // 
+            this.txtoutbound.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtoutbound.Location = new System.Drawing.Point(344, 108);
+            this.txtoutbound.MinDate = new System.DateTime(2018, 10, 4, 0, 0, 0, 0);
+            this.txtoutbound.Name = "txtoutbound";
+            this.txtoutbound.Size = new System.Drawing.Size(134, 22);
+            this.txtoutbound.TabIndex = 16;
+            this.txtoutbound.Value = new System.DateTime(2018, 10, 4, 0, 0, 0, 0);
+            this.txtoutbound.ValueChanged += new System.EventHandler(this.txtoutbound_ValueChanged);
+            // 
+            // txtreturn
+            // 
+            this.txtreturn.Enabled = false;
+            this.txtreturn.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtreturn.Location = new System.Drawing.Point(594, 109);
+            this.txtreturn.Name = "txtreturn";
+            this.txtreturn.Size = new System.Drawing.Size(134, 22);
+            this.txtreturn.TabIndex = 17;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -334,7 +349,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.cbthreeday2);
             this.Controls.Add(this.gridviewreturn);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtreturnflight);
             this.Controls.Add(this.cbthreeday1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.groupBox1);
@@ -366,14 +381,12 @@
         private System.Windows.Forms.ComboBox cbfrom;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnapply;
-        private System.Windows.Forms.TextBox txtreturn;
-        private System.Windows.Forms.TextBox txtoutbound;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox cbthreeday1;
         private System.Windows.Forms.DataGridView gridviewreturn;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label txtreturnflight;
         private System.Windows.Forms.CheckBox cbthreeday2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button2;
@@ -381,6 +394,8 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataGridView gridviewoutbound;
+        private System.Windows.Forms.DateTimePicker txtreturn;
+        private System.Windows.Forms.DateTimePicker txtoutbound;
     }
 }
 
