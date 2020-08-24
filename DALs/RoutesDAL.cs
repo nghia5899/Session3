@@ -21,7 +21,7 @@ namespace DALs
             con.Open();
             List<RoutesDTO> danhsach = new List<RoutesDTO>();
 
-            string sqlSelect = "select Schedules.Date,Schedules.Time ,Schedules.FlightNumber,Schedules.EconomyPrice " +
+            string sqlSelect = "select Schedules.ID,Schedules.Time ,Schedules.FlightNumber,Schedules.EconomyPrice " +
                 "from Routes inner join Schedules on Routes.ID = Schedules.RouteID inner " +
                 "join Aircrafts on Schedules.AircraftID = Aircrafts.ID " +
                 "where DepartureAirportID = @mafrom and ArrivalAirportID = @mato and Schedules.Date = @ngaydi";
@@ -34,12 +34,12 @@ namespace DALs
             {
                 RoutesDTO routesDTO = new RoutesDTO(from.Iatacode,
                     to.Iatacode,
-                    ngaydi,
+                    String.Format("{0:yyyy/MM/dd}", ngaydi),
                    dr["Time"].ToString(),
                    "[" + dr["FlightNumber"].ToString() + "]",
-                   (Convert.ToDouble(dr["EconomyPrice"])*hangve).ToString(),
+                   Math.Round((Convert.ToDouble(dr["EconomyPrice"])*hangve)).ToString(),
                   0 );
-
+                routesDTO.Idschedules = dr["ID"].ToString();
                 danhsach.Add(routesDTO);
             }
             con.Close();
@@ -50,7 +50,7 @@ namespace DALs
         {
             con.Open();
             List<RoutesDTO> danhsach = new List<RoutesDTO>();
-            string sqlSelect = "select Routes.DepartureAirportID,Routes.ArrivalAirportID, Schedules.Date,Schedules.Time ,Schedules.FlightNumber,Schedules.EconomyPrice " +
+            string sqlSelect = "select Schedules.ID, Routes.DepartureAirportID,Routes.ArrivalAirportID, Schedules.Date,Schedules.Time ,Schedules.FlightNumber,Schedules.EconomyPrice " +
                 "from Routes inner join Schedules on Routes.ID = Schedules.RouteID inner " +
                 "join Aircrafts on Schedules.AircraftID = Aircrafts.ID " +
                 "where DepartureAirportID = @mafrom  and Schedules.Date = @ngaydi";
@@ -62,11 +62,12 @@ namespace DALs
             {
                 RoutesDTO routesDTO = new RoutesDTO(dr["DepartureAirportID"].ToString(),
                     dr["ArrivalAirportID"].ToString(),
-                    ngaydi,
+                    String.Format("{0:yyyy/MM/dd}", ngaydi),
                    dr["Time"].ToString(),
                    "[" + dr["FlightNumber"].ToString() + "]",
-                   (Convert.ToDouble(dr["EconomyPrice"]) * hangve).ToString(),
+                   Math.Round((Convert.ToDouble(dr["EconomyPrice"]) * hangve)).ToString(),
                    0);
+                routesDTO.Idschedules = dr["ID"].ToString();
                 danhsach.Add(routesDTO);
             }
             con.Close();
@@ -76,7 +77,7 @@ namespace DALs
         {
             con.Open();
             List<RoutesDTO> danhsach = new List<RoutesDTO>();
-            string sqlSelect = "select Routes.DepartureAirportID,Routes.ArrivalAirportID, Schedules.Date,Schedules.Time ,Schedules.FlightNumber,Schedules.EconomyPrice " +
+            string sqlSelect = "select Schedules.ID,Routes.DepartureAirportID,Routes.ArrivalAirportID, Schedules.Date,Schedules.Time ,Schedules.FlightNumber,Schedules.EconomyPrice " +
                 "from Routes inner join Schedules on Routes.ID = Schedules.RouteID inner " +
                 "join Aircrafts on Schedules.AircraftID = Aircrafts.ID " +
                 "where ArrivalAirportID = @mato  and Schedules.Date = @ngaydi";
@@ -88,15 +89,18 @@ namespace DALs
             {
                 RoutesDTO routesDTO = new RoutesDTO(dr["DepartureAirportID"].ToString(),
                     dr["ArrivalAirportID"].ToString(),
-                    String.Format("{0: yy/MM/dd}",ngaydi),
+                    String.Format("{0:yyyy/MM/dd}",ngaydi),
                    dr["Time"].ToString(),
                    "[" + dr["FlightNumber"].ToString() + "]",
-                   (Convert.ToDouble(dr["EconomyPrice"]) * hangve).ToString(),
+                   Math.Round((Convert.ToDouble(dr["EconomyPrice"]) * hangve)).ToString(),
                    0);
+                routesDTO.Idschedules = dr["ID"].ToString();
                 danhsach.Add(routesDTO);
             }
             con.Close();
             return danhsach;
         }
+
+       
     }
 }

@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Billing_confirmation));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.txttongtien = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
@@ -57,14 +57,14 @@
             this.label2.TabIndex = 21;
             this.label2.Text = "Paid using:";
             // 
-            // label3
+            // txttongtien
             // 
-            this.label3.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(251, 81);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(109, 23);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "$$$$$$";
+            this.txttongtien.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txttongtien.Location = new System.Drawing.Point(251, 81);
+            this.txttongtien.Name = "txttongtien";
+            this.txttongtien.Size = new System.Drawing.Size(109, 23);
+            this.txttongtien.TabIndex = 22;
+            this.txttongtien.Text = "$$$$$$";
             // 
             // radioButton1
             // 
@@ -120,6 +120,7 @@
             this.button2.TabIndex = 27;
             this.button2.Text = "Issue tickets";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Billing_confirmation
             // 
@@ -131,11 +132,12 @@
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txttongtien);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "Billing_confirmation";
             this.Text = "Billing_confirmation";
+            this.Load += new System.EventHandler(this.Billing_confirmation_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,7 +147,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label txttongtien;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;

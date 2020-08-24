@@ -12,9 +12,23 @@ namespace SearchForm
 {
     public partial class Billing_confirmation : Form
     {
+        int tongtien;
+
         public Billing_confirmation()
         {
             InitializeComponent();
+        }
+
+        public int Tongtien { get => tongtien; set => tongtien = value; }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Billing_confirmation_Load(object sender, EventArgs e)
+        {
+            txttongtien.Text = "$"+tongtien;
         }
     }
 }

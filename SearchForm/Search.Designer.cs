@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtreturn = new System.Windows.Forms.DateTimePicker();
+            this.txtoutbound = new System.Windows.Forms.DateTimePicker();
             this.btnapply = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,21 +45,33 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.cbthreeday1 = new System.Windows.Forms.CheckBox();
-            this.gridviewreturn = new System.Windows.Forms.DataGridView();
             this.txtreturnflight = new System.Windows.Forms.Label();
             this.cbthreeday2 = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.confirmbooking = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.gridviewoutbound = new System.Windows.Forms.DataGridView();
-            this.txtoutbound = new System.Windows.Forms.DateTimePicker();
-            this.txtreturn = new System.Windows.Forms.DateTimePicker();
+            this.from = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.to = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flightnumbers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cabinprice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numberofstops = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridviewreturn = new System.Windows.Forms.DataGridView();
+            this.from1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.to1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.time1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flightnumbers1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cabinprice1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numberofstops1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridviewreturn)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.confirmbooking.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewoutbound)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridviewreturn)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -86,6 +100,26 @@
             this.groupBox1.Text = "Search parameter";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // txtreturn
+            // 
+            this.txtreturn.Enabled = false;
+            this.txtreturn.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtreturn.Location = new System.Drawing.Point(609, 110);
+            this.txtreturn.Name = "txtreturn";
+            this.txtreturn.Size = new System.Drawing.Size(134, 22);
+            this.txtreturn.TabIndex = 17;
+            // 
+            // txtoutbound
+            // 
+            this.txtoutbound.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtoutbound.Location = new System.Drawing.Point(343, 109);
+            this.txtoutbound.MinDate = new System.DateTime(2018, 10, 4, 0, 0, 0, 0);
+            this.txtoutbound.Name = "txtoutbound";
+            this.txtoutbound.Size = new System.Drawing.Size(134, 22);
+            this.txtoutbound.TabIndex = 16;
+            this.txtoutbound.Value = new System.DateTime(2018, 10, 4, 0, 0, 0, 0);
+            this.txtoutbound.ValueChanged += new System.EventHandler(this.txtoutbound_ValueChanged);
+            // 
             // btnapply
             // 
             this.btnapply.Image = ((System.Drawing.Image)(resources.GetObject("btnapply.Image")));
@@ -103,7 +137,7 @@
             this.label5.AutoSize = true;
             this.label5.Image = ((System.Drawing.Image)(resources.GetObject("label5.Image")));
             this.label5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label5.Location = new System.Drawing.Point(517, 114);
+            this.label5.Location = new System.Drawing.Point(532, 115);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 17);
             this.label5.TabIndex = 11;
@@ -114,7 +148,7 @@
             this.label4.AutoSize = true;
             this.label4.Image = ((System.Drawing.Image)(resources.GetObject("label4.Image")));
             this.label4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label4.Location = new System.Drawing.Point(247, 111);
+            this.label4.Location = new System.Drawing.Point(246, 112);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(91, 17);
             this.label4.TabIndex = 9;
@@ -220,17 +254,6 @@
             this.cbthreeday1.UseVisualStyleBackColor = true;
             this.cbthreeday1.CheckedChanged += new System.EventHandler(this.cbthreeday1_CheckedChanged);
             // 
-            // gridviewreturn
-            // 
-            this.gridviewreturn.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridviewreturn.Enabled = false;
-            this.gridviewreturn.Location = new System.Drawing.Point(69, 526);
-            this.gridviewreturn.Name = "gridviewreturn";
-            this.gridviewreturn.RowHeadersWidth = 51;
-            this.gridviewreturn.RowTemplate.Height = 24;
-            this.gridviewreturn.Size = new System.Drawing.Size(909, 177);
-            this.gridviewreturn.TabIndex = 23;
-            // 
             // txtreturnflight
             // 
             this.txtreturnflight.AutoSize = true;
@@ -254,19 +277,20 @@
             this.cbthreeday2.UseVisualStyleBackColor = true;
             this.cbthreeday2.CheckedChanged += new System.EventHandler(this.cbthreeday2_CheckedChanged);
             // 
-            // groupBox2
+            // confirmbooking
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.White;
-            this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.ForeColor = System.Drawing.Color.Black;
-            this.groupBox2.Location = new System.Drawing.Point(253, 726);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(484, 82);
-            this.groupBox2.TabIndex = 25;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Confirm booking for";
+            this.confirmbooking.BackColor = System.Drawing.Color.White;
+            this.confirmbooking.Controls.Add(this.button2);
+            this.confirmbooking.Controls.Add(this.label8);
+            this.confirmbooking.Controls.Add(this.textBox3);
+            this.confirmbooking.Enabled = false;
+            this.confirmbooking.ForeColor = System.Drawing.Color.Black;
+            this.confirmbooking.Location = new System.Drawing.Point(253, 726);
+            this.confirmbooking.Name = "confirmbooking";
+            this.confirmbooking.Size = new System.Drawing.Size(484, 82);
+            this.confirmbooking.TabIndex = 25;
+            this.confirmbooking.TabStop = false;
+            this.confirmbooking.Text = "Confirm booking for";
             // 
             // button2
             // 
@@ -311,32 +335,143 @@
             // gridviewoutbound
             // 
             this.gridviewoutbound.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridviewoutbound.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.from,
+            this.to,
+            this.date,
+            this.time,
+            this.flightnumbers,
+            this.cabinprice,
+            this.numberofstops});
             this.gridviewoutbound.Location = new System.Drawing.Point(69, 274);
+            this.gridviewoutbound.MultiSelect = false;
             this.gridviewoutbound.Name = "gridviewoutbound";
             this.gridviewoutbound.RowHeadersWidth = 51;
             this.gridviewoutbound.RowTemplate.Height = 24;
+            this.gridviewoutbound.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridviewoutbound.Size = new System.Drawing.Size(903, 181);
             this.gridviewoutbound.TabIndex = 27;
+            this.gridviewoutbound.TabStop = false;
+            this.gridviewoutbound.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewoutbound_CellClick);
             // 
-            // txtoutbound
+            // from
             // 
-            this.txtoutbound.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.txtoutbound.Location = new System.Drawing.Point(344, 108);
-            this.txtoutbound.MinDate = new System.DateTime(2018, 10, 4, 0, 0, 0, 0);
-            this.txtoutbound.Name = "txtoutbound";
-            this.txtoutbound.Size = new System.Drawing.Size(134, 22);
-            this.txtoutbound.TabIndex = 16;
-            this.txtoutbound.Value = new System.DateTime(2018, 10, 4, 0, 0, 0, 0);
-            this.txtoutbound.ValueChanged += new System.EventHandler(this.txtoutbound_ValueChanged);
+            this.from.HeaderText = "From";
+            this.from.MinimumWidth = 6;
+            this.from.Name = "from";
+            this.from.Width = 125;
             // 
-            // txtreturn
+            // to
             // 
-            this.txtreturn.Enabled = false;
-            this.txtreturn.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.txtreturn.Location = new System.Drawing.Point(594, 109);
-            this.txtreturn.Name = "txtreturn";
-            this.txtreturn.Size = new System.Drawing.Size(134, 22);
-            this.txtreturn.TabIndex = 17;
+            this.to.HeaderText = "To";
+            this.to.MinimumWidth = 6;
+            this.to.Name = "to";
+            this.to.Width = 125;
+            // 
+            // date
+            // 
+            this.date.HeaderText = "Date";
+            this.date.MinimumWidth = 6;
+            this.date.Name = "date";
+            this.date.Width = 125;
+            // 
+            // time
+            // 
+            this.time.HeaderText = "Time";
+            this.time.MinimumWidth = 6;
+            this.time.Name = "time";
+            this.time.Width = 125;
+            // 
+            // flightnumbers
+            // 
+            this.flightnumbers.HeaderText = "Flight Number(s)";
+            this.flightnumbers.MinimumWidth = 6;
+            this.flightnumbers.Name = "flightnumbers";
+            this.flightnumbers.Width = 125;
+            // 
+            // cabinprice
+            // 
+            this.cabinprice.HeaderText = "Cabin Price";
+            this.cabinprice.MinimumWidth = 6;
+            this.cabinprice.Name = "cabinprice";
+            this.cabinprice.Width = 125;
+            // 
+            // numberofstops
+            // 
+            this.numberofstops.HeaderText = "Number of stops";
+            this.numberofstops.MinimumWidth = 6;
+            this.numberofstops.Name = "numberofstops";
+            this.numberofstops.Width = 125;
+            // 
+            // gridviewreturn
+            // 
+            this.gridviewreturn.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridviewreturn.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.from1,
+            this.to1,
+            this.date1,
+            this.time1,
+            this.flightnumbers1,
+            this.cabinprice1,
+            this.numberofstops1});
+            this.gridviewreturn.Enabled = false;
+            this.gridviewreturn.Location = new System.Drawing.Point(69, 526);
+            this.gridviewreturn.Name = "gridviewreturn";
+            this.gridviewreturn.RowHeadersWidth = 51;
+            this.gridviewreturn.RowTemplate.Height = 24;
+            this.gridviewreturn.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridviewreturn.Size = new System.Drawing.Size(909, 177);
+            this.gridviewreturn.TabIndex = 23;
+            this.gridviewreturn.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewreturn_CellClick);
+            // 
+            // from1
+            // 
+            this.from1.HeaderText = "From";
+            this.from1.MinimumWidth = 6;
+            this.from1.Name = "from1";
+            this.from1.Width = 125;
+            // 
+            // to1
+            // 
+            this.to1.HeaderText = "To";
+            this.to1.MinimumWidth = 6;
+            this.to1.Name = "to1";
+            this.to1.Width = 125;
+            // 
+            // date1
+            // 
+            this.date1.HeaderText = "Date";
+            this.date1.MinimumWidth = 6;
+            this.date1.Name = "date1";
+            this.date1.Width = 125;
+            // 
+            // time1
+            // 
+            this.time1.HeaderText = "Time";
+            this.time1.MinimumWidth = 6;
+            this.time1.Name = "time1";
+            this.time1.Width = 125;
+            // 
+            // flightnumbers1
+            // 
+            this.flightnumbers1.HeaderText = "Flight Number(s)";
+            this.flightnumbers1.MinimumWidth = 6;
+            this.flightnumbers1.Name = "flightnumbers1";
+            this.flightnumbers1.Width = 125;
+            // 
+            // cabinprice1
+            // 
+            this.cabinprice1.HeaderText = "Cabin Price";
+            this.cabinprice1.MinimumWidth = 6;
+            this.cabinprice1.Name = "cabinprice1";
+            this.cabinprice1.Width = 125;
+            // 
+            // numberofstops1
+            // 
+            this.numberofstops1.HeaderText = "Number of stops";
+            this.numberofstops1.MinimumWidth = 6;
+            this.numberofstops1.Name = "numberofstops1";
+            this.numberofstops1.Width = 125;
             // 
             // Form1
             // 
@@ -346,7 +481,7 @@
             this.ClientSize = new System.Drawing.Size(1067, 850);
             this.Controls.Add(this.gridviewoutbound);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.confirmbooking);
             this.Controls.Add(this.cbthreeday2);
             this.Controls.Add(this.gridviewreturn);
             this.Controls.Add(this.txtreturnflight);
@@ -360,10 +495,10 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridviewreturn)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.confirmbooking.ResumeLayout(false);
+            this.confirmbooking.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewoutbound)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridviewreturn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -385,10 +520,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox cbthreeday1;
-        private System.Windows.Forms.DataGridView gridviewreturn;
         private System.Windows.Forms.Label txtreturnflight;
         private System.Windows.Forms.CheckBox cbthreeday2;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox confirmbooking;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox3;
@@ -396,6 +530,21 @@
         private System.Windows.Forms.DataGridView gridviewoutbound;
         private System.Windows.Forms.DateTimePicker txtreturn;
         private System.Windows.Forms.DateTimePicker txtoutbound;
+        private System.Windows.Forms.DataGridViewTextBoxColumn from;
+        private System.Windows.Forms.DataGridViewTextBoxColumn to;
+        private System.Windows.Forms.DataGridViewTextBoxColumn date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn time;
+        private System.Windows.Forms.DataGridViewTextBoxColumn flightnumbers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cabinprice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numberofstops;
+        private System.Windows.Forms.DataGridView gridviewreturn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn from1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn to1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn date1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn time1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn flightnumbers1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cabinprice1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numberofstops1;
     }
 }
 
