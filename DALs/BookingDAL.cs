@@ -35,6 +35,8 @@ namespace DALs
                    "[" + dr["FlightNumber"].ToString() + "]",
                    Math.Round((Convert.ToDouble(dr["EconomyPrice"]) * hangve)).ToString(),
                    0);
+            DateTime date = DateTime.Parse(String.Format("{0:yyyy/MM/dd}", dr["date"].ToString()));
+            routes.Date = date.ToString("yyyy/MM/dd");
                 routes.Idschedules = dr["ID"].ToString();
             con.Close();
 

@@ -50,7 +50,7 @@
             this.confirmbooking = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtpassengers = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.gridviewoutbound = new System.Windows.Forms.DataGridView();
             this.from = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -268,13 +268,13 @@
             // cbthreeday2
             // 
             this.cbthreeday2.AutoSize = true;
-            this.cbthreeday2.Enabled = false;
             this.cbthreeday2.Location = new System.Drawing.Point(725, 490);
             this.cbthreeday2.Name = "cbthreeday2";
             this.cbthreeday2.Size = new System.Drawing.Size(253, 21);
             this.cbthreeday2.TabIndex = 24;
             this.cbthreeday2.Text = "Display three days before and after";
             this.cbthreeday2.UseVisualStyleBackColor = true;
+            this.cbthreeday2.Visible = false;
             this.cbthreeday2.CheckedChanged += new System.EventHandler(this.cbthreeday2_CheckedChanged);
             // 
             // confirmbooking
@@ -282,7 +282,7 @@
             this.confirmbooking.BackColor = System.Drawing.Color.White;
             this.confirmbooking.Controls.Add(this.button2);
             this.confirmbooking.Controls.Add(this.label8);
-            this.confirmbooking.Controls.Add(this.textBox3);
+            this.confirmbooking.Controls.Add(this.txtpassengers);
             this.confirmbooking.Enabled = false;
             this.confirmbooking.ForeColor = System.Drawing.Color.Black;
             this.confirmbooking.Location = new System.Drawing.Point(253, 726);
@@ -314,12 +314,14 @@
             this.label8.TabIndex = 2;
             this.label8.Text = "Passengers";
             // 
-            // textBox3
+            // txtpassengers
             // 
-            this.textBox3.Location = new System.Drawing.Point(26, 30);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(114, 22);
-            this.textBox3.TabIndex = 0;
+            this.txtpassengers.Location = new System.Drawing.Point(26, 30);
+            this.txtpassengers.Name = "txtpassengers";
+            this.txtpassengers.Size = new System.Drawing.Size(114, 22);
+            this.txtpassengers.TabIndex = 0;
+            this.txtpassengers.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtpassengers_KeyPress);
+            this.txtpassengers.Leave += new System.EventHandler(this.txtpassengers_Leave);
             // 
             // button3
             // 
@@ -414,7 +416,6 @@
             this.flightnumbers1,
             this.cabinprice1,
             this.numberofstops1});
-            this.gridviewreturn.Enabled = false;
             this.gridviewreturn.Location = new System.Drawing.Point(69, 526);
             this.gridviewreturn.Name = "gridviewreturn";
             this.gridviewreturn.RowHeadersWidth = 51;
@@ -422,6 +423,7 @@
             this.gridviewreturn.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridviewreturn.Size = new System.Drawing.Size(909, 177);
             this.gridviewreturn.TabIndex = 23;
+            this.gridviewreturn.Visible = false;
             this.gridviewreturn.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewreturn_CellClick);
             // 
             // from1
@@ -525,7 +527,7 @@
         private System.Windows.Forms.GroupBox confirmbooking;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtpassengers;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataGridView gridviewoutbound;
         private System.Windows.Forms.DateTimePicker txtreturn;

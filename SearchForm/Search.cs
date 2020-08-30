@@ -17,12 +17,16 @@ namespace SearchForm
         SanBayBUL sanbayBUL = new SanBayBUL();
         RoutesBUL routesBUL = new RoutesBUL();
         SeatBUL seatBUL = new SeatBUL();
-        int vitridi=0;
-        int vitrive=0;
+        int vitridi = 0;
+        int vitrive = 0;
         List<RoutesDTO> listongdi = new List<RoutesDTO>();
         List<RoutesDTO> listongve = new List<RoutesDTO>();
         Boolean clickdi = false, clickve = false;
 
+
+
+
+        
         public void loadcbsanbay()
         {
             cbfrom.DataSource = sanbayBUL.getSanBay();
@@ -134,21 +138,26 @@ namespace SearchForm
             {
                 listongve.Clear();
                 DateTime ngaydi = DateTime.Parse(ngay);
-                
-                
+
+                DateTime ngaychon = txtoutbound.Value;
 
                 for (int i = 3; i >=1; i--)
                 {
                     DateTime ngayditruoc = new DateTime(ngaydi.Year, ngaydi.Month, ngaydi.Day - i);
-                    listtong.AddRange(routesBUL.xulychuyenbay(new SanBayDTO(cbto.SelectedValue.ToString(), cbto.Text),
+                    if (ngaychon.Day <= ngayditruoc.Day)
+                    {
+                        listtong.AddRange(routesBUL.xulychuyenbay(new SanBayDTO(cbto.SelectedValue.ToString(), cbto.Text),
                                                 new SanBayDTO(cbfrom.SelectedValue.ToString(), cbfrom.Text),
                                                 ngayditruoc.ToString("yyyy/MM/dd"), getCabintypes()));
+                    }
+                    
                 }
                 listongve.AddRange(routesBUL.xulychuyenbay(new SanBayDTO(cbto.SelectedValue.ToString(), cbto.Text),
                                 new SanBayDTO(cbfrom.SelectedValue.ToString(), cbfrom.Text),
                               converttoString(txtreturn.Value), getCabintypes()));
                 for (int i = 1; i<=3; i++)
                 {
+
                     DateTime ngaydisau = new DateTime(ngaydi.Year, ngaydi.Month, ngaydi.Day + i);
                     listtong.AddRange(routesBUL.xulychuyenbay(new SanBayDTO(cbto.SelectedValue.ToString(), cbto.Text),
                             new SanBayDTO(cbfrom.SelectedValue.ToString(), cbfrom.Text),
@@ -188,17 +197,18 @@ namespace SearchForm
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             clickdi = false;
             clickve = false;
             if (!cbfrom.SelectedValue.Equals(cbto.SelectedValue))
             {
-                
                 if (rbreturn.Checked == true)
                 {
                         if (cbthreeday2.Checked == true)
                         {
                             loadthreeday2(converttoString(txtreturn.Value), gridviewreturn, listongve);
-                        }else
+                        }
+                        else
                             loadRoutesReturn();
                 }
                 if (cbthreeday1.Checked == true)
@@ -223,8 +233,8 @@ namespace SearchForm
             if (rboneway.Checked == true)
             {
                 txtreturn.Enabled = false;
-                gridviewreturn.Enabled = false;
-                cbthreeday2.Enabled = false;
+                gridviewreturn.Visible = false;
+                cbthreeday2.Visible = false;
                 txtreturnflight.Enabled = false;
             }   
            
@@ -234,13 +244,7 @@ namespace SearchForm
 
         private void cbthreeday1_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbthreeday1.Checked == true)
-            {
-                
-                loadthreeday1(converttoString(txtoutbound.Value),gridviewoutbound,listongdi);
-            }
-            else
-                loadRoutes();
+            
             
         }
 
@@ -251,31 +255,52 @@ namespace SearchForm
 
         private void cbthreeday2_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbthreeday2.Checked == true)
-            {
-                
-                loadthreeday2(converttoString(txtreturn.Value), gridviewreturn,listongve);
-            }
-            else
-                loadRoutesReturn();
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (xulyghe(listongdi, vitridi,"chiều đi ") == true)
+            {
+                if (rbreturn.Checked == true)
+                {
+
+                    DateTime giodi = DateTime.Parse(listongdi[vitridi].Date+" "+ listongdi[vitridi].Time);
+                    DateTime giodve = DateTime.Parse(listongve[vitrive].Date + " " + listongve[vitrive].Time);
+                    if (giodi.CompareTo(giodve) < 0)
+                    {
+                        if (xulyghe(listongve, vitrive, "chiều về ") == true)
+                        {
+                            chuyenform();
+                        }
+                    }       
+                    else
+                        MessageBox.Show("Thời gian đi không hợp lệ");
+                }
+                else
+                    chuyenform();
+            }
+               
+            
+        }
+        public void chuyenform()
+        {
+            
             bookingconfirmation bc = new bookingconfirmation();
             bc.Iddi = listongdi[vitridi].Idschedules;
             bc.Cabintype = cbcabintype.Text;
             bc.Ngaydi = converttoString(txtoutbound.Value);
             bc.Checkve = rbreturn.Checked;
+            bc.Sove = Convert.ToInt32(txtpassengers.Text);
             if (rbreturn.Checked)
-            { 
-               bc.Idve = listongve[vitrive].Idschedules;
-               bc.Ngayve = converttoString(txtreturn.Value);
+            {
+                bc.Idve = listongve[vitrive].Idschedules;
+                bc.Ngayve = converttoString(txtreturn.Value);
             }
+            bc.Form = this;
             bc.Show();
             Visible = false;
         }
-
         private void txtoutbound_ValueChanged(object sender, EventArgs e)
         {
             setngayve();
@@ -286,8 +311,8 @@ namespace SearchForm
 
             if (rbreturn.Checked == true)
             {
-                gridviewreturn.Enabled = true;
-                cbthreeday2.Enabled = true;
+                gridviewreturn.Visible = true;
+                cbthreeday2.Visible = true;
                 txtreturn.Enabled = true;
                 txtreturnflight.Enabled = true;
                 setngayve();
@@ -297,49 +322,44 @@ namespace SearchForm
                 gridviewreturn.Rows.Clear();
             }
         }
-        public void xulyghe(List<RoutesDTO> list,int vitri)
+        public bool xulyghe(List<RoutesDTO> list,int vitri,String chieu)
         {
+            int sove = Convert.ToInt32(txtpassengers.Text);
             String cabintype = cbcabintype.SelectedValue.ToString();
             String idschedules = list[vitri].Idschedules;
             String[] mangid = idschedules.Split('-');
             if (mangid.Length > 1)
             {
-
-                if (seatBUL.checkSeat(mangid[0], cabintype).Equals("1"))
+                String[] mang = list[vitri].Flights_number.ToString().Split(']');
+                if (seatBUL.checkSeat(mangid[0], cabintype, sove).Equals("1"))
                 {
-
-                    if (seatBUL.checkSeat(mangid[1], cabintype).Equals("1"))
+                    
+                    if (seatBUL.checkSeat(mangid[1], cabintype, sove).Equals("1"))
                     {
-                        if (rboneway.Checked && clickdi == true)
-                            confirmbooking.Enabled = true;
-                        else if (rbreturn.Checked && clickdi == true && clickve == true)
-                            confirmbooking.Enabled = true;
+                        return true;
                     }
                     else
                     {
-                        MessageBox.Show(seatBUL.checkSeat(mangid[1], cabintype), "Tình trạng vé ");
-                        confirmbooking.Enabled = false;
+                        MessageBox.Show(seatBUL.checkSeat(mangid[1], cabintype, sove), "Tình trạng vé tuyến "+chieu + mang[1]+"]");
+                        return false;
                     }
 
                 }
                 else
                 {
-                    MessageBox.Show(seatBUL.checkSeat(mangid[0], cabintype), "Tình trạng vé ");
-                    confirmbooking.Enabled = false;
+                    MessageBox.Show(seatBUL.checkSeat(mangid[0], cabintype, sove), "Tình trạng vé tuyến " + chieu + mang[0]+"]");
+                    return false;
                 }
             }
             else
-                if (seatBUL.checkSeat(idschedules, cabintype).Equals("1"))
+                if (seatBUL.checkSeat(idschedules, cabintype, sove).Equals("1"))
                 {
-                    if(rboneway.Checked && clickdi == true)
-                        confirmbooking.Enabled = true;
-                    else if (rbreturn.Checked && clickdi == true && clickve == true)
-                            confirmbooking.Enabled = true;
-            }
+                    return true;
+                }
                 else
                 {
-                    MessageBox.Show(seatBUL.checkSeat(idschedules, cabintype), "Tình trạng vé");
-                    confirmbooking.Enabled = false;
+                    MessageBox.Show(seatBUL.checkSeat(idschedules, cabintype, sove), "Tình trạng vé tuyến " + chieu + list[vitri].Flights_number);
+                    return false;
                 }
 
             
@@ -350,14 +370,41 @@ namespace SearchForm
         {
             clickdi = true;
             vitridi = e.RowIndex;
-            xulyghe(listongdi, vitridi);
+            if (rboneway.Checked == true)
+                confirmbooking.Enabled = true;
+            if (rbreturn.Checked == true && clickdi == true)
+                confirmbooking.Enabled = true;
+        }
+
+        private void txtpassengers_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            /*if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }*/
+        }
+
+        private void txtpassengers_Leave(object sender, EventArgs e)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtpassengers.Text, "[^0-9]"))
+            {
+                if (Convert.ToInt32(txtpassengers.Text) < 1)
+                {
+                    txtpassengers.Text = "";
+                    MessageBox.Show("Bản phải nhập ký tự số dương");
+                    txtpassengers.Focus();
+                }
+                
+            }
         }
 
         private void gridviewreturn_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             clickve = true;
             vitrive = e.RowIndex;
-            xulyghe(listongve, vitrive);
+            if(rbreturn.Checked==true&&clickdi==true)
+                confirmbooking.Enabled = true;
+
         }
     }
 }

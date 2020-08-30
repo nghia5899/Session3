@@ -50,7 +50,7 @@ namespace DALs
         {
             con.Open();
             List<RoutesDTO> danhsach = new List<RoutesDTO>();
-            string sqlSelect = "select Schedules.ID, Routes.DepartureAirportID,Routes.ArrivalAirportID, Schedules.Date,Schedules.Time ,Schedules.FlightNumber,Schedules.EconomyPrice " +
+            string sqlSelect = "select Routes.FlightTime,Schedules.ID, Routes.DepartureAirportID,Routes.ArrivalAirportID, Schedules.Date,Schedules.Time ,Schedules.FlightNumber,Schedules.EconomyPrice " +
                 "from Routes inner join Schedules on Routes.ID = Schedules.RouteID inner " +
                 "join Aircrafts on Schedules.AircraftID = Aircrafts.ID " +
                 "where DepartureAirportID = @mafrom  and Schedules.Date = @ngaydi";
@@ -68,6 +68,7 @@ namespace DALs
                    Math.Round((Convert.ToDouble(dr["EconomyPrice"]) * hangve)).ToString(),
                    0);
                 routesDTO.Idschedules = dr["ID"].ToString();
+                routesDTO.Flighttime = Convert.ToInt32(dr["FlightTime"]);
                 danhsach.Add(routesDTO);
             }
             con.Close();

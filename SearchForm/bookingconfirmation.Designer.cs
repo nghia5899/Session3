@@ -397,6 +397,7 @@
             this.txtphone.Name = "txtphone";
             this.txtphone.Size = new System.Drawing.Size(158, 22);
             this.txtphone.TabIndex = 17;
+            this.txtphone.Leave += new System.EventHandler(this.txtphone_Leave);
             // 
             // label26
             // 
@@ -424,6 +425,8 @@
             this.txtpassportnb.Name = "txtpassportnb";
             this.txtpassportnb.Size = new System.Drawing.Size(125, 22);
             this.txtpassportnb.TabIndex = 13;
+            this.txtpassportnb.TextChanged += new System.EventHandler(this.txtfirstname_Leave);
+            this.txtpassportnb.Leave += new System.EventHandler(this.txtpassportnb_Leave);
             // 
             // label24
             // 
@@ -451,6 +454,7 @@
             this.txtlastname.Name = "txtlastname";
             this.txtlastname.Size = new System.Drawing.Size(171, 22);
             this.txtlastname.TabIndex = 9;
+            this.txtlastname.Leave += new System.EventHandler(this.txtlastname_Leave);
             // 
             // label22
             // 
@@ -468,6 +472,7 @@
             this.txtfirstname.Name = "txtfirstname";
             this.txtfirstname.Size = new System.Drawing.Size(157, 22);
             this.txtfirstname.TabIndex = 7;
+            this.txtfirstname.Leave += new System.EventHandler(this.txtfirstname_Leave);
             // 
             // label13
             // 
@@ -499,12 +504,14 @@
             this.passportnumber,
             this.passportcountry,
             this.phone});
-            this.grvpassenger.Location = new System.Drawing.Point(61, 586);
+            this.grvpassenger.Location = new System.Drawing.Point(61, 577);
             this.grvpassenger.Name = "grvpassenger";
             this.grvpassenger.RowHeadersWidth = 51;
             this.grvpassenger.RowTemplate.Height = 24;
-            this.grvpassenger.Size = new System.Drawing.Size(942, 132);
+            this.grvpassenger.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grvpassenger.Size = new System.Drawing.Size(942, 154);
             this.grvpassenger.TabIndex = 14;
+            this.grvpassenger.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grvpassenger_CellClick);
             // 
             // firstname
             // 
@@ -550,6 +557,7 @@
             // 
             // btnremove
             // 
+            this.btnremove.Enabled = false;
             this.btnremove.Location = new System.Drawing.Point(844, 737);
             this.btnremove.Name = "btnremove";
             this.btnremove.Size = new System.Drawing.Size(159, 28);

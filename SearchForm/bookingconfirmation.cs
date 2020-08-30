@@ -28,13 +28,20 @@ namespace SearchForm
         Boolean checkve = false;
         String[] mangid;
         String[] mangidve;
+        int sove;
+        int vitrixoa;
+        Form1 form;
 
+
+       
         public string Cabintype { get => cabintype; set => cabintype = value; }
         public string Iddi { get => iddi; set => iddi = value; }
         public string Idve { get => idve; set => idve = value; }
         public string Ngaydi { get => ngaydi; set => ngaydi = value; }
         public string Ngayve { get => ngayve; set => ngayve = value; }
         public bool Checkve { get => checkve; set => checkve = value; }
+        public int Sove { get => sove; set => sove = value; }
+        public Form1 Form { get => form; set => form = value; }
 
         public bookingconfirmation()
         {
@@ -97,7 +104,7 @@ namespace SearchForm
             txtfromout.Text = listdi[0].From;
             txttoout.Text = listdi[0].To;
             txtcabintypeout.Text = Cabintype;
-            txtdateout.Text = ngaydi;
+            txtdateout.Text = listdi[0].Date;
             txtflightnumberout.Text = listdi[0].Flights_number;
             if (mangdi.Length > 1)
             {
@@ -105,7 +112,7 @@ namespace SearchForm
                 txtfromout1.Text = listdi[1].From;
                 txttoout1.Text = listdi[1].To;
                 txtcabintypeout1.Text = Cabintype;
-                txtdateout1.Text = ngaydi;
+                txtdateout1.Text = listdi[1].Date;
                 txtflightnumberout1.Text = listdi[1].Flights_number;
             }
         }
@@ -115,7 +122,7 @@ namespace SearchForm
             txtfromre.Text = listve[0].From;
             txttore.Text = listve[0].To;
             txtcabintypere.Text = Cabintype;
-            txtdatere.Text = ngayve;
+            txtdatere.Text = listve[0].Date;
             txtflightre.Text = listve[0].Flights_number;
             if (mangve.Length > 1)
             {
@@ -123,7 +130,7 @@ namespace SearchForm
                 txtfromre1.Text = listve[1].From;
                 txttore1.Text = listve[1].To;
                 txtcabintypere1.Text = Cabintype;
-                txtdatere1.Text = ngayve;
+                txtdatere1.Text = listve[1].Date;
                 txtflightre1.Text = listve[1].Flights_number;
             }
         }
@@ -156,12 +163,6 @@ namespace SearchForm
                 grvpassenger.Rows[i].Cells[5].Value = item.Phone;
                 i++;
             }
-        }
-
-        public void remove()
-        {
-            int vitri = listpassenger.Count;
-            listpassenger.RemoveAt(vitri - 1);
         }
 
         public int getTongTien()
@@ -211,23 +212,41 @@ namespace SearchForm
 
         private void btnremove_Click(object sender, EventArgs e)
         {
-
-            if (listpassenger.Count > 0)
-            {
+                
                 DialogResult result = MessageBox.Show(this, "Bạn chắc chắn xóa", "Xóa", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    remove();
+                    listpassenger.RemoveAt(vitrixoa);
+                    btnremove.Enabled = false;
                 }
-            }  
-            //ádsads
-            loadgrv();
+            
+             loadgrv();
         }
-
+        public bool checknull()
+        {
+            if (String.IsNullOrEmpty(txtfirstname.Text) || String.IsNullOrEmpty(txtlastname.Text)
+                                    || String.IsNullOrEmpty(txtpassportnb.Text) || String.IsNullOrEmpty(txtphone.Text))
+                return false;
+            else
+                return true;
+           
+        }
         private void btnadd_Click(object sender, EventArgs e)
         {
-            addpassenger();
-            loadgrv();
+            if (listpassenger.Count == sove)
+                MessageBox.Show("Đã đủ sô người");
+            else
+            {
+                if (checknull())
+                {
+                    addpassenger();
+                    loadgrv();
+                }
+                else
+                    MessageBox.Show("Không được để trống");
+               
+            }    
+                
         }
 
         private void bookingconfirmation_Load(object sender, EventArgs e)
@@ -240,22 +259,83 @@ namespace SearchForm
 
         private void btnconfirm_Click(object sender, EventArgs e)
         {
-            if (listpassenger.Count > 0)
+            if (listpassenger.Count == sove)
             {
-                addTicket();
-                MessageBox.Show("Đặt vé thành công");
                 Billing_confirmation billing = new Billing_confirmation();
                 billing.Tongtien = getTongTien() * listpassenger.Count;
+                billing.Mangid = mangid;
+                billing.Mangidve = mangidve;
+                billing.Listpassenger = listpassenger;
+                billing.Bookingreference = bookingreference;
+                billing.Cabintype = cabintype;
+                billing.Checkve = checkve;
+                billing.Form2 = this;
                 billing.Show();
                 Visible = false;
             }
+            else
+            {
+                MessageBox.Show("Nhập đủ số người");
+            }
         }
 
-        private void btnback_Click(object sender, EventArgs e)
+       
+
+         private void btnback_Click(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();
+            Form1 form1 = form;
+            
             form1.Show();
+
+            
             Visible = false;
+        }
+
+        private void txtlastname_Leave(object sender, EventArgs e)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtlastname.Text, "[^a-zA-Z\\s]"))
+            {
+                txtlastname.Text = "";
+                MessageBox.Show("Bản phải nhập ký tự chữ");
+                txtlastname.Focus();
+            }
+        }
+
+        private void txtfirstname_Leave(object sender, EventArgs e)
+        {
+            
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtfirstname.Text, "[^a-zA-Z\\s]"))
+            {
+                txtfirstname.Text = "";
+                MessageBox.Show("Bản phải nhập ký tự chữ");
+                txtfirstname.Focus();
+            }
+        }
+
+        private void txtpassportnb_Leave(object sender, EventArgs e)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtpassportnb.Text, "[^0-9]"))
+            {
+                txtpassportnb.Text = "";
+                MessageBox.Show("Bản phải nhập ký tự số");
+                txtpassportnb.Focus();
+            }
+        }
+
+        private void txtphone_Leave(object sender, EventArgs e)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtphone.Text, "[^0-9]"))
+            {
+                txtphone.Text = "";
+                MessageBox.Show("Bản phải nhập ký tự số");
+                txtphone.Focus();
+            }
+        }
+
+        private void grvpassenger_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            btnremove.Enabled = true;
+            vitrixoa = e.RowIndex;
         }
     }
 }

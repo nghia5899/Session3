@@ -12,7 +12,7 @@ namespace BULs
     {
         SeatDAL seatDAL = new SeatDAL();
 
-        public String checkSeat(String id, String type)
+        public String checkSeat(String id, String type,int sove)
         {
             SeatDTO seatDTO = seatDAL.getSeat(id);
             int soghe = seatDAL.getSeatType(id, type);
@@ -20,17 +20,17 @@ namespace BULs
                                 "\n BusinessSeats:" + seatDAL.getSeatType(id, "2") + "/" + seatDTO.Businessseat+
                                 "\n FirstClassSeats:" + seatDAL.getSeatType(id, "3") + "/" + seatDTO.Firstclass;
             if (type == "1")
-                if (soghe < seatDTO.Economyseat)
+                if (soghe+sove <= seatDTO.Economyseat)
                     return "1";
                 else
                     return tinhtrang;
             if (type == "2")
-                if (soghe < seatDTO.Businessseat)
+                if (soghe+sove <= seatDTO.Businessseat)
                     return "1";
                 else
                     return tinhtrang;
             if (type == "3")
-                if (soghe < seatDTO.Firstclass)
+                if (soghe+sove <= seatDTO.Firstclass)
                     return "1";
                 else
                     return tinhtrang;

@@ -16,6 +16,7 @@ namespace DTOs
         String cabin_price;
         int number_of_stops;
         String idschedules;
+        int flighttime;
 
         public RoutesDTO(){}
         public RoutesDTO(String from, String to, String date, String time, String flights_number, String cabin_price, int number_of_stops)
@@ -37,5 +38,6 @@ namespace DTOs
         public string Cabin_price { get => cabin_price; set => cabin_price = value; }
         public int Number_of_stops { get => number_of_stops; set => number_of_stops = value; }
         public string Idschedules { get => idschedules; set => idschedules = value; }
+        public int Flighttime { get => flighttime; set => flighttime = value; }
     }
 }
