@@ -397,6 +397,7 @@
             this.txtphone.Name = "txtphone";
             this.txtphone.Size = new System.Drawing.Size(158, 22);
             this.txtphone.TabIndex = 17;
+            this.txtphone.TextChanged += new System.EventHandler(this.txtphone_TextChanged);
             this.txtphone.Leave += new System.EventHandler(this.txtphone_Leave);
             // 
             // label26

@@ -231,6 +231,14 @@ namespace SearchForm
                 return true;
            
         }
+        public void clear()
+        {
+            txtfirstname.Clear();
+            txtlastname.Clear();
+            txtpassportnb.Clear();
+            txtphone.Clear();
+
+        }
         private void btnadd_Click(object sender, EventArgs e)
         {
             if (listpassenger.Count == sove)
@@ -241,12 +249,13 @@ namespace SearchForm
                 {
                     addpassenger();
                     loadgrv();
+                    clear();
                 }
                 else
                     MessageBox.Show("Không được để trống");
                
             }    
-                
+             
         }
 
         private void bookingconfirmation_Load(object sender, EventArgs e)
@@ -336,6 +345,11 @@ namespace SearchForm
         {
             btnremove.Enabled = true;
             vitrixoa = e.RowIndex;
+        }
+
+        private void txtphone_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -260,28 +260,35 @@ namespace SearchForm
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (xulyghe(listongdi, vitridi,"chiều đi ") == true)
-            {
-                if (rbreturn.Checked == true)
+            if(!txtpassengers.Text.Equals(""))
+                if (xulyghe(listongdi, vitridi,"chiều đi ") == true)
                 {
-
-                    DateTime giodi = DateTime.Parse(listongdi[vitridi].Date+" "+ listongdi[vitridi].Time);
-                    DateTime giodve = DateTime.Parse(listongve[vitrive].Date + " " + listongve[vitrive].Time);
-                    if (giodi.CompareTo(giodve) < 0)
+                    if (rbreturn.Checked == true)
                     {
-                        if (xulyghe(listongve, vitrive, "chiều về ") == true)
+
+                        DateTime giodi = DateTime.Parse(listongdi[vitridi].Date+" "+ listongdi[vitridi].Time);
+                        DateTime giodve = DateTime.Parse(listongve[vitrive].Date + " " + listongve[vitrive].Time);
+                        if (giodi.CompareTo(giodve) < 0)
                         {
-                            chuyenform();
-                        }
-                    }       
+                            if (xulyghe(listongve, vitrive, "chiều về ") == true)
+                            {
+                                chuyenform();
+                            }
+                        }       
+                        else
+                            MessageBox.Show("Thời gian chiều về phải sau thời gian chiều đi");
+                    }
                     else
-                        MessageBox.Show("Thời gian đi không hợp lệ");
+                        chuyenform();
                 }
                 else
-                    chuyenform();
-            }
-               
-            
+                    if (xulyghe(listongve, vitrive, "chiều về ") == true)
+                    {
+                        
+                    }
+
+
+
         }
         public void chuyenform()
         {
@@ -372,7 +379,7 @@ namespace SearchForm
             vitridi = e.RowIndex;
             if (rboneway.Checked == true)
                 confirmbooking.Enabled = true;
-            if (rbreturn.Checked == true && clickdi == true)
+            if (rbreturn.Checked == true && clickdi == true && clickve == true)
                 confirmbooking.Enabled = true;
         }
 
